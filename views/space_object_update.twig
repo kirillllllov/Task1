@@ -1,0 +1,43 @@
+{% extends "__layout.twig" %}
+
+{% block content %}
+	<h1>Изменение персонажа</h1>
+	<hr>
+	{% if message %}
+		<div class="alert alert-info">
+			{{ message }}
+			<a href="/brz_cars/{{id}}">Открыть измененный объект</a>
+		</div>
+	{% endif %}
+	<form action="" enctype="multipart/form-data" method="POST" class="row g-3">
+		<div class="col-4">
+			<label class="form-label">Название</label>
+			<input type="text" class="form-control" name="title" value="{{object.title}}">
+		</div>
+		<div class="col-4">
+			<label class="form-label">Краткое описание</label>
+			<input type="text" class="form-control" name="description" value="{{ object.description}} ">
+		</div>
+		<div class="col-4">
+			<label class="form-label">Тип</label>
+			<select class="form-control" name="type">
+
+				{% for type_bd in types_bd %}
+					<option value="{{ type_bd.name }}" {% if type_bd.name == object.type %} selected {% endif %}>{{ type_bd.name }}</option>
+				{% endfor %}
+
+			</select>
+		</div>
+		<div class="mb-3">
+			<label class="form-label">Картинка</label>
+			<input class="form-control" type="file" name="image" value="{{ object.image }}">
+		</div>
+		<div class="col-12">
+			<textarea name="info" placeholder="Полное описание..." class="form-control" rows="9">{{object.info}}</textarea>
+		</div>
+		<div class="col-12 text-end">
+			<button type="submit" class="btn btn-primary">Изменить</button>
+		</div>
+	</form>
+
+{% endblock %}

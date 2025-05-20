@@ -1,0 +1,33 @@
+/* Применяем стили к ссылкам */
+.a__search {
+  display: block;
+  text-decoration: none;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 400px;
+}
+
+/* Применяем стили при наведении курсора */
+.a__search:hover {
+  background-color: #e1e1e1;
+}
+
+.recent-page {
+  padding: 10px;
+  margin-bottom: 5px;
+  border-radius: 10px;
+  background-image: linear-gradient(to right, #bc09cc, #da1b74);
+  color: #fff;
+}
+
+.recent-pages {
+  min-width: 400px;
+  overflow-y: auto;
+}
+
+.recent-page a {
+  color: white;
+  text-decoration: none;
+}

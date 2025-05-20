@@ -1,0 +1,24 @@
+{% macro btn1(_url, path, text) %}
+    {% if _url == path %}
+        <a class="nav-link active" href="{{ path }}">{{ text }}</a>
+    {% else %}
+        <a class="nav-link" href="{{ path }}">{{ text }}</a>
+    {% endif %}
+{% endmacro %}
+
+{% macro btn2(_url, path, text) %}
+    {% if _url == info_path %}
+        <a class="nav-link active" href="{{ path }}">{{ text }}</a>
+    {% else %}
+        <a class="nav-link" href="{{ path }}">{{ text }}</a>
+    {% endif %}
+{% endmacro %}
+
+{% macro btn3(title, item_title, item_url) %}
+    {% if title == item_title %}
+        <a class="nav-link active" href="{{item_url}}">{{item_title}}</a>
+    {% else %}
+        <a class="nav-link" href="{{item_url}}">{{item_title}}</a>
+    {% endif %}
+{% endmacro %}
+
