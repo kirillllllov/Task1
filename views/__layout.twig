@@ -27,7 +27,7 @@
                     </li>
                     {% for type_bd in types_bd %}
                     <li class="nav-item">
-                        <a class="nav-link" href="/?type={{ type_bd.name }}">
+                        <a class="nav-link" href="/?type={{ type_bd.id }}">
                             {% if type_bd.image %}
                                 <img src="{{ type_bd.image }}" alt="{{ type_bd.name|escape }}" style="height:20px; width:20px; margin-right:5px; vertical-align: middle;">
                             {% endif %}
@@ -62,7 +62,7 @@
                             >
                                 <option value="все">Все типы</option>
                                 {% for type_bd in types_bd %}
-                                    <option value="{{ type_bd.name }}">{{ type_bd.name }}</option>
+                                    <option value="{{ type_bd.id }}">{{ type_bd.name }}</option>
                                 {% endfor %}
                             </select>
                             <button class="btn btn-outline-secondary" type="submit">

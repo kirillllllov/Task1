@@ -1,7 +1,7 @@
 <?php
-require_once "BaseSpaceTwigController.php";
+require_once "BaseBrzTwigController.php";
 
-class SearchController extends BaseSpaceTwigController
+class SearchController extends BaseBrzTwigController
 {
     public $template = "search.twig";
 
@@ -21,17 +21,19 @@ class SearchController extends BaseSpaceTwigController
                 EOL;
         } else {
             $sql = <<<EOL
-                SELECT id, title
+                SELECT brz_cars.id, brz_cars.title
                 FROM brz_cars
-                WHERE (:title= '' OR title like CONCAT('%', :title, '%')) AND (:info= '' OR info like CONCAT('%', :info, '%'))
-                    AND (type = :type)
+                INNER JOIN brz_cars_types ON brz_cars.type = brz_cars_types.name
+                WHERE (:title= '' OR brz_cars.title like CONCAT('%', :title, '%')) 
+                AND (:info= '' OR brz_cars.info like CONCAT('%', :info, '%'))
+                AND brz_cars_types.id = :type_id
                 EOL;
         }
 
         $query = $this->pdo->prepare($sql);
 
         $query->bindValue("title", $title);
-        $query->bindValue("type", $type);
+        $query->bindValue("type_id", $type);
         $query->bindValue("info", $info);
         $query->execute();
 

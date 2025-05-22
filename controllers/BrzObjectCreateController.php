@@ -1,9 +1,9 @@
 <?php
-require_once "BaseSpaceTwigController.php";
+require_once "BaseBrzTwigController.php";
 
-class SpaceObjectCreateController extends BaseSpaceTwigController
+class BrzObjectCreateController extends BaseBrzTwigController
 {
-  public $template = "space_object_create.twig";
+  public $template = "brz_object_create.twig";
 
   public function get(array $context)
   {
@@ -12,40 +12,41 @@ class SpaceObjectCreateController extends BaseSpaceTwigController
 
   public function post(array $context)
   {
-    // получаем значения полей с формы
     $title = $_POST['title'];
     $description = $_POST['description'];
-    $type = $_POST['type'];
+    $type_id = $_POST['type'];
     $info = $_POST['info'];
 
-    // вытащил значения из $_FILES
+    // Get type name from ID
+    $type_query = $this->pdo->prepare("SELECT name FROM brz_cars_types WHERE id = :type_id");
+    $type_query->bindValue("type_id", $type_id);
+    $type_query->execute();
+    $type_data = $type_query->fetch();
+    $type = $type_data['name'];
+
     $tmp_name = $_FILES['image']['tmp_name'];
     $file_name = $_FILES['image']['name'];
     
-    // проверяем, что файл был загружен
     if ($tmp_name && $file_name) {
         move_uploaded_file($tmp_name, "../public/media/$file_name");
-        $image_url = "/media/$file_name"; // формируем ссылку без адреса сервера
+        $image_url = "/media/$file_name"; 
     } else {
-        $image_url = ""; // или установите значение по умолчанию
+        $image_url = "";
     }
 
-    // создаем текст запрос
     $sql = <<<EOL
 INSERT INTO brz_cars(title, description, type, info, image)
 VALUES(:title, :description, :type, :info, :image_url)
 EOL;
 
-    // подготавливаем запрос к БД
     $query = $this->pdo->prepare($sql);
-    // привязываем параметры
+    
     $query->bindValue("title", $title);
     $query->bindValue("description", $description);
     $query->bindValue("type", $type);
     $query->bindValue("info", $info);
     $query->bindValue("image_url", $image_url);
 
-    // выполняем запрос
     $query->execute();
 
     $context['message'] = 'Вы успешно создали объект';

@@ -21,11 +21,9 @@
 		<div class="col-4">
 			<label class="form-label">Тип</label>
 			<select class="form-control" name="type">
-
 				{% for type_bd in types_bd %}
-					<option value="{{ type_bd.name }}" {% if type_bd.name == object.type %} selected {% endif %}>{{ type_bd.name }}</option>
+					<option value="{{ type_bd.id }}" {% if type_bd.name == object.type %} selected {% endif %}>{{ type_bd.name }}</option>
 				{% endfor %}
-
 			</select>
 		</div>
 		<div class="mb-3">

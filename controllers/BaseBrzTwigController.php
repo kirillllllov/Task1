@@ -1,5 +1,5 @@
 <?php
-class BaseSpaceTwigController extends TwigBaseController
+class BaseBrzTwigController extends TwigBaseController
 {
     public function getContext(): array
     {
@@ -9,7 +9,7 @@ class BaseSpaceTwigController extends TwigBaseController
         $types = $query->fetchAll();
         $context['types'] = $types;
 
-        $query = $this->pdo->query("SELECT name, image FROM brz_cars_types");
+        $query = $this->pdo->query("SELECT id, name, image FROM brz_cars_types");
         $types_bd = $query->fetchAll();
         $context['types_bd'] = $types_bd;
 

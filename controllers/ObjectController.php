@@ -1,9 +1,9 @@
 <?php
-require_once "BaseSpaceTwigController.php";
+require_once "BaseBrzTwigController.php";
 
-class ObjectController extends BaseSpaceTwigController
+class ObjectController extends BaseBrzTwigController
 {
-    public $template = "object.twig"; // указываем шаблон
+    public $template = "object.twig";
     public $image_path = "";
     public $info_path = "";
 
@@ -11,16 +11,15 @@ class ObjectController extends BaseSpaceTwigController
     {
         $context = parent::getContext();
 
-        // готовим запрос к БД, тут уже указываю конкретные поля, там более грамотно
-        // создам запрос, под параметр создаем переменную my_id в запросе
+       
         $query = $this->pdo->prepare("SELECT image, info, title, description, id FROM brz_cars WHERE id= :my_id");
-        // подвязываем значение в my_id 
+        
         $query->bindValue("my_id", $this->params['id']);
 
-        // Получаем параметр запроса 'show'
+        
         $showType = $_GET['show'] ?? 'default';
 
-        $query->execute(); // выполняем запрос
+        $query->execute();
 
         switch ($showType) {
             case 'image':
@@ -45,7 +44,7 @@ class ObjectController extends BaseSpaceTwigController
                 $image_path = $info_path = "/brz_cars/" . $data['id'] . "?show=image";
                 $info_path = "";
 
-                // передаем описание из БД в контекст
+                
                 $context['title'] = $data['title'];
                 $context['description'] = $data['description'];
                 
@@ -57,13 +56,13 @@ class ObjectController extends BaseSpaceTwigController
                 $context['showType'] = "info";
                 break;
             default:
-                // тянем данные
+                
                 $data = $query->fetch();
 
                 $image_path = $data['id'] . "?show=image";
                 $info_path = $data['id'] . "?show=info";
 
-                // передаем описание из БД в контекст
+                
                 $context['description'] = $data['description'];
                 $context['title'] = $data['title'];
 
